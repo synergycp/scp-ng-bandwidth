@@ -109,8 +109,8 @@ gulp.task('merge', function () {
   return gulp
     .src([
       build.dir +'/'+build.vendor.js,
-      build.dir +'/'+build.src.tpls,
       build.dir +'/'+build.src.js,
+      build.dir +'/'+build.src.tpls,
     ])
     .pipe($.concat(build.dist.js))
     .pipe(gulp.dest('./'))
