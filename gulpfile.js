@@ -46,6 +46,7 @@ var pugOptions = {
 };
 var tplCacheOptions = {
   root: 'scp/bandwidth',
+  module: 'scp.bandwidth',
 };
 
 gulp.task('scripts', function () {
