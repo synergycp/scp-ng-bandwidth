@@ -15,7 +15,7 @@
       },
       controller: 'BandwidthGraphCtrl as bandwidth',
       transclude: true,
-      templateUrl: 'app/bandwidth/bandwidth.graph.html'
+      templateUrl: 'scp/bandwidth/bandwidth.graph.html',
     })
     ;
 })();

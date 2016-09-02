@@ -45,6 +45,7 @@ var pugOptions = {
   basedir: './',
 };
 var tplCacheOptions = {
+  root: 'scp/bandwidth',
 };
 
 gulp.task('scripts', function () {
