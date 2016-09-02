@@ -25,7 +25,7 @@ var build = {
   dir: './build',
   src: {
     js: 'src.min.js',
-    tpls: 'tpls.min.js',
+    tpls: 'templates.js',
   },
   vendor: {
     js: 'vendor.min.js',
