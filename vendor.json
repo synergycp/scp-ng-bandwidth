@@ -1,0 +1,10 @@
+[
+  "node_modules/scp-ng-router/dist.min.js",
+  "node_modules/angular-loading-bar/build/loading-bar.js",
+  "node_modules/angular-translate/dist/angular-translate.min.js",
+  "node_modules/angular-translate-loader-url/angular-translate-loader-url.js",
+  "node_modules/angular-translate-loader-static-files/angular-translate-loader-static-files.js",
+  "node_modules/angular-translate-storage-local/angular-translate-storage-local.js",
+  "node_modules/angular-translate-storage-cookie/angular-translate-storage-cookie.js",
+  "node_modules/angular-sanitize/angular-sanitize.js"
+]
