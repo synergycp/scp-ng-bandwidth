@@ -1,29 +1,22 @@
 {
-  "name": "scp-ng-layout",
+  "name": "scp-ng-bandwidth",
   "version": "1.0.0",
-  "description": "Synergy Control Panel Angular layout files",
+  "description": "Synergy Control Panel Angular bandwidth files",
   "main": "dist.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://github.com/cabloo/scp-ng-layout.git"
+    "url": "git+ssh://github.com/cabloo/scp-ng-bandwidth.git"
   },
   "author": "Synergy Control Panel",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/cabloo/scp-ng-layout/issues"
+    "url": "https://github.com/cabloo/scp-ng-bandwidth/issues"
   },
-  "homepage": "https://github.com/cabloo/scp-ng-layout#readme",
+  "homepage": "https://github.com/cabloo/scp-ng-bandwidth#readme",
   "devDependencies": {
-    "angular-loading-bar": "^0.9.0",
-    "angular-sanitize": "^1.5.8",
-    "angular-translate": "^2.11.1",
-    "angular-translate-loader-static-files": "^2.11.1",
-    "angular-translate-loader-url": "^2.11.1",
-    "angular-translate-storage-cookie": "^2.11.1",
-    "angular-translate-storage-local": "^2.11.1",
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-concat": "^2.6.0",
@@ -37,7 +30,6 @@
     "gulp-pug": "^3.0.4",
     "gulp-sync": "^0.1.4",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7",
-    "scp-ng-router": "git+ssh://git@github.com/cabloo/scp-ng-router.git#0.0.1"
+    "gulp-util": "^3.0.7"
   }
 }
