@@ -1,14 +1,13 @@
-var NODE = 'node_modules/';
-
 module.exports = [{
   name: 'scp-ng-bandwidth',
+  dirname: __dirname,
   files: [
-    NODE+'numeral/min/numeral.min.js',
-    NODE+'moment/moment.js',
-    NODE+'chart.js/dist/Chart.min.js',
-    NODE+'angular-chart.js/dist/angular-chart.min.js',
-    NODE+'bootstrap-daterangepicker/daterangepicker.js',
-    NODE+'bootstrap-daterangepicker/daterangepicker.css',
-    NODE+'angular-daterangepicker/js/angular-daterangepicker.js',
+    require.resolve('numeral/min/numeral.min.js'),
+    require.resolve('moment/moment.js'),
+    require.resolve('chart.js/dist/Chart.min.js'),
+    require.resolve('angular-chart.js/dist/angular-chart.min.js'),
+    require.resolve('bootstrap-daterangepicker/daterangepicker.js'),
+    require.resolve('bootstrap-daterangepicker/daterangepicker.css'),
+    require.resolve('angular-daterangepicker/js/angular-daterangepicker.js'),
   ],
 }];
