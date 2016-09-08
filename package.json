@@ -16,6 +16,14 @@
     "url": "https://github.com/cabloo/scp-ng-bandwidth/issues"
   },
   "homepage": "https://github.com/cabloo/scp-ng-bandwidth#readme",
+  "dependencies": {
+    "angular-chart.js": "^1.0.2",
+    "chart.js": "^2.2.2",
+    "moment": "^2.14.1",
+    "numeral": "^1.5.3",
+    "angular-daterangepicker": "^0.2.3-alpha1",
+    "bootstrap-daterangepicker": "^2.1.24"
+  },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
