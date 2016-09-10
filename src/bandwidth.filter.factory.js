@@ -3,8 +3,11 @@
 
   var OPTIONS = {
     refresh: function () {},
-    defaultRange: 'Last 6 Hours'
+    defaultRange: 'Last 6 Hours',
   };
+
+  var dateFormat = 'MM/DD/YYYY HH:mm';
+  var minMaxFormat = 'YYYY-DD-MM';
 
   angular
     .module('scp.bandwidth')
@@ -30,7 +33,7 @@
   function BandwidthFilter(options, moment, event, date, _) {
     var filter = this;
     var thirty_m = moment.duration(30, 'minutes');
-    var now = date.round(
+    var nowRounded = date.round(
       moment(),
       thirty_m,
       'ceil'
@@ -41,22 +44,22 @@
       'floor'
     );
     var ranges = {
-      'Last Hour': [last_hour, now],
+      'Last Hour': [last_hour, nowRounded],
       'Last 6 Hours': [
-        moment(now).subtract(6, 'hours'),
-        now
+        moment(nowRounded).subtract(6, 'hours'),
+        nowRounded
       ],
       'Last Day': [
-        moment(now).subtract(1, 'day'),
-        now
+        moment(nowRounded).subtract(1, 'day'),
+        nowRounded
       ],
       'Last Week': [
-        moment(now).subtract(1, 'week'),
-        now
+        moment(nowRounded).subtract(1, 'week'),
+        nowRounded
       ],
       'Last Month': [
-        moment(now).subtract(1, 'month'),
-        now
+        moment(nowRounded).subtract(1, 'month'),
+        nowRounded
       ]
     };
 
@@ -90,11 +93,11 @@
         endDate: filter.end = filter.defaultEndTime(),
       };
       filter.min = undefined;
-      filter.max = moment().add(5, 'minutes').format('YYYY-DD-MM');
+      filter.max = undefined;//moment(nowRounded).add(5, 'minutes').format('MM/DD/YYYY');
 
       filter.opts = {
         ranges: ranges,
-        format: 'YYYY-DD-MM',
+        format: dateFormat,
         startDate: filter.start,
         endDate: filter.end,
         timePicker: true,
@@ -138,7 +141,7 @@
      * @return {this}
      */
     function setMinTime(minTime) {
-      filter.min = minTime ? moment.unix(minTime).format('YYYY-DD-MM') : undefined;
+      filter.min = minTime ? moment.unix(minTime).format(minMaxFormat) : undefined;
 
       return filter;
     }
@@ -149,7 +152,7 @@
      * @return {this}
      */
     function setMaxTime(maxTime) {
-      filter.max = maxTime ? moment.unix(maxTime).format('YYYY-DD-MM') : undefined;
+      filter.max = maxTime ? moment.unix(maxTime).format(minMaxFormat) : undefined;
 
       return filter;
     }
