@@ -69,10 +69,9 @@
     filter.setMaxTime = setMaxTime;
     filter.startTime = startTime;
     filter.endTime = endTime;
-    filter.defaultStartTime = defaultStartTime;
-    filter.defaultEndTime = defaultEndTime;
     filter.getRanges = getRanges;
     filter.getLabel = getLabel;
+    filter.setRangeByLabel = setRangeByLabel;
 
     activate();
 
@@ -84,22 +83,29 @@
       return filter;
     }
 
+    function setRangeByLabel(label) {
+      filter.range = label;
+      filter.input = {
+        startDate: filter.start = defaultStartTime(label),
+        endDate: filter.end = defaultEndTime(label),
+      };
+      filter.opts.startDate = filter.start;
+      filter.opts.endDate = filter.end;
+    }
+
     function activate() {
       filter.options = options;
-      filter.range = filter.options.defaultRange;
       filter.isSetup = false;
-      filter.input = {
-        startDate: filter.start = filter.defaultStartTime(),
-        endDate: filter.end = filter.defaultEndTime(),
-      };
       filter.min = undefined;
-      filter.max = undefined;//moment(nowRounded).add(5, 'minutes').format('MM/DD/YYYY');
+      filter.setMaxTime(
+        moment(nowRounded)
+          .add(5, 'minutes')
+          .unix()
+      );
 
       filter.opts = {
         ranges: ranges,
         format: dateFormat,
-        startDate: filter.start,
-        endDate: filter.end,
         timePicker: true,
         timePicker24Hour: true,
         eventHandlers: {
@@ -114,6 +120,7 @@
 
       event.bindTo(filter);
       filter.on('change', setRangeLabel);
+      filter.setRangeByLabel(filter.options.defaultRange);
     }
 
     function setRangeLabel() {
@@ -178,19 +185,23 @@
     /**
      * Get the default selected start time.
      *
+     * @param {string} label
+     *
      * @return {moment|null}
      */
-    function defaultStartTime() {
-      return filter.getRanges()[filter.options.defaultRange][0];
+    function defaultStartTime(label) {
+      return filter.getRanges()[label][0];
     }
 
     /**
      * Get the default selected end time.
      *
+     * @param {string} label
+     *
      * @return {moment|null}
      */
-    function defaultEndTime() {
-      return filter.getRanges()[filter.options.defaultRange][1];
+    function defaultEndTime(label) {
+      return filter.getRanges()[label][1];
     }
 
     /**
