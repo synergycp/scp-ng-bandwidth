@@ -11,5 +11,8 @@ module.exports = [
       'bootstrap-daterangepicker/daterangepicker.js',
       'bootstrap-daterangepicker/daterangepicker.css',
       'angular-daterangepicker/js/angular-daterangepicker.js',
+    ])
+    .static([
+      'dist/**/*',
     ]),
 ];

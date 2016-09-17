@@ -1,0 +1,16 @@
+a.btn.btn-default(
+  ng-if="picker.bandwidth.chart.isActive"
+  ng-click="picker.openFilter()"
+)
+  span(ng-bind="picker.bandwidth.filter.range")
+  | &nbsp;&nbsp;
+  span.caret
+input.date-picker(
+  type="text"
+  style="visibility:hidden;width:0px;border:none"
+  date-range-picker
+  ng-model="picker.bandwidth.filter.input"
+  options="picker.bandwidth.filter.opts"
+  min="picker.bandwidth.filter.min"
+  max="picker.bandwidth.filter.max"
+)
