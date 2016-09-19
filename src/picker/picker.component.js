@@ -30,7 +30,7 @@
   /**
    * @ngInject
    */
-  function BandwidthDateRangePickerCtrl($element) {
+  function BandwidthDateRangePickerCtrl($element, $timeout) {
     var picker = this;
 
     picker.$onInit = init;
@@ -41,8 +41,20 @@
     function init() {
     }
 
-    function openFilter() {
-      $('.date-picker', $element[0]).click();
+    function openFilter($event) {
+      var $elem = $picker();
+
+      if ($event.target === $elem[0]) {
+        return;
+      }
+
+      $timeout(
+        $elem.click.bind($elem)
+      );
+    }
+
+    function $picker() {
+      return $('.date-picker', $element[0]);
     }
   }
 })();

@@ -44,6 +44,7 @@ var cssnanoOpts = {};
 var pugOptions = {
   basedir: './',
 };
+var styles = require('./gulp/styles');
 
 gulp.task('scripts', function () {
   return gulp
@@ -88,6 +89,8 @@ gulp.task('vendor', function () {
     ;
 });
 
+gulp.task('styles', styles.app);
+
 gulp.task('templates', function () {
   return gulp
     .src(source.templates)
@@ -110,6 +113,7 @@ gulp.task('merge', function () {
 
 gulp.task('default', gulpsync.sync([
   'scripts',
+  'styles',
   'vendor',
   'templates',
   'merge',

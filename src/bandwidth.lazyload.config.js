@@ -2,6 +2,7 @@
   'use strict';
 
   var NODE = 'vendor/scp-ng-bandwidth/node_modules/';
+  var APP = 'vendor/scp-ng-bandwidth/dist/';
 
   angular
     .module('scp.bandwidth')
@@ -38,6 +39,7 @@
         NODE+'bootstrap-daterangepicker/daterangepicker.js',
         NODE+'bootstrap-daterangepicker/daterangepicker.css',
         NODE+'angular-daterangepicker/js/angular-daterangepicker.js',
+        APP+'picker/picker.css',
       ],
     }], Array.prototype.push.bind(APP_REQUIRES.modules));
   }
