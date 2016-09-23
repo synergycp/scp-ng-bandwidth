@@ -7,11 +7,12 @@
   };
 
   var dateFormat = 'MM/DD/YYYY HH:mm';
-  var minMaxFormat = 'YYYY-DD-MM';
+  var minMaxFormat = 'YYYY-MM-DD';
 
   angular
     .module('scp.bandwidth')
-    .factory('BandwidthFilter', BandwidthFilterFactory);
+    .factory('BandwidthFilter', BandwidthFilterFactory)
+    ;
 
   /**
    * BandwidthFilter Factory
@@ -137,9 +138,21 @@
     function setRange(start, end) {
       filter.fire(
         'change',
-        filter.input.startDate = filter.start = moment(start),
-        filter.input.endDate = filter.end = moment(end)
+        setStart(start),
+        setEnd(end)
       );
+    }
+
+    function setEnd(end) {
+      filter.input.endDate = filter.end = moment(end);
+
+      return filter.input.endDate;
+    }
+
+    function setStart(start) {
+      filter.input.startDate = filter.start = moment(start);
+
+      return filter.input.startDate;
     }
 
     /**
@@ -159,7 +172,21 @@
      * @return {this}
      */
     function setMaxTime(maxTime) {
-      filter.max = maxTime ? moment.unix(maxTime).format(minMaxFormat) : undefined;
+      if (!maxTime) {
+        filter.max = undefined;
+        return;
+      }
+
+      var max = moment.unix(maxTime);
+
+      if (max.isBefore(filter.end)) {
+        max = moment(filter.end);
+        /*var diff = filter.end.diff(filter.start);
+        setEnd(max);
+        setStart(moment(max).subtract(diff));*/
+      }
+
+      filter.max = max.format(minMaxFormat);
 
       return filter;
     }
