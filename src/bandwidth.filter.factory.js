@@ -33,19 +33,19 @@
 
   function BandwidthFilter(options, moment, event, date, _) {
     var filter = this;
-    var thirty_m = moment.duration(30, 'minutes');
+    var thirtyMinutes = moment.duration(30, 'minutes');
     var nowRounded = date.round(
       moment(),
-      thirty_m,
+      thirtyMinutes,
       'ceil'
     );
-    var last_hour = date.round(
+    var lastHour = date.round(
       moment().subtract(1, 'hours'),
-      thirty_m,
+      thirtyMinutes,
       'floor'
     );
     var ranges = {
-      'Last Hour': [last_hour, nowRounded],
+      'Last Hour': [lastHour, nowRounded],
       'Last 6 Hours': [
         moment(nowRounded).subtract(6, 'hours'),
         nowRounded
@@ -63,6 +63,8 @@
         nowRounded
       ]
     };
+
+    filter.input = {};
 
     filter.setOptions = setOptions;
     filter.setRange = setRange;
@@ -85,13 +87,15 @@
     }
 
     function setRangeByLabel(label) {
+      if (filter.range === label) {
+        return;
+      }
+
       filter.range = label;
-      filter.input = {
-        startDate: filter.start = defaultStartTime(label),
-        endDate: filter.end = defaultEndTime(label),
-      };
-      filter.opts.startDate = filter.start;
-      filter.opts.endDate = filter.end;
+      filter.setRange(
+        defaultStartTime(label),
+        defaultEndTime(label)
+      );
     }
 
     function activate() {
@@ -110,18 +114,20 @@
         timePicker: true,
         timePicker24Hour: true,
         eventHandlers: {
-          'apply.daterangepicker': function () {
-            filter.setRange(
-              filter.input.startDate,
-              filter.input.endDate
-            );
-          },
+          'apply.daterangepicker': onDateChosen,
         },
       };
 
       event.bindTo(filter);
       filter.on('change', setRangeLabel);
       filter.setRangeByLabel(filter.options.defaultRange);
+    }
+
+    function onDateChosen () {
+      filter.setRange(
+        filter.input.startDate,
+        filter.input.endDate
+      );
     }
 
     function setRangeLabel() {
