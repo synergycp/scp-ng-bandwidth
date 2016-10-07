@@ -7,7 +7,7 @@
   };
 
   var dateFormat = 'MM/DD/YYYY HH:mm';
-  var minMaxFormat = 'YYYY-MM-DD';
+  var minMaxFormat = 'YYYY-MM-DD HH:mm';
 
   angular
     .module('scp.bandwidth')
@@ -33,6 +33,7 @@
 
   function BandwidthFilter(options, moment, event, date, _) {
     var filter = this;
+    var intendedMaxTime;
     var thirtyMinutes = moment.duration(30, 'minutes');
     var nowRounded = date.round(
       moment(),
@@ -64,6 +65,7 @@
       ]
     };
 
+
     filter.input = {};
 
     filter.setOptions = setOptions;
@@ -75,10 +77,21 @@
     filter.getRanges = getRanges;
     filter.getLabel = getLabel;
     filter.setRangeByLabel = setRangeByLabel;
+    filter.jumpToLatest = jumpToLatest;
 
     activate();
 
     //////////
+
+    function jumpToLatest() {
+      var max = moment.unix(intendedMaxTime).subtract(1);
+      var diff = filter.end.diff(filter.start);
+      filter.setRange(
+        moment(max).subtract(diff),
+        max
+      );
+      filter.setMaxTime(intendedMaxTime);
+    }
 
     function setOptions(options) {
       _.assign(filter.opts, options);
@@ -124,6 +137,7 @@
     }
 
     function onDateChosen () {
+      console.log(filter.input.startDate);
       filter.setRange(
         filter.input.startDate,
         filter.input.endDate
@@ -150,15 +164,17 @@
     }
 
     function setEnd(end) {
-      filter.input.endDate = filter.end = moment(end);
+      filter.end = moment(end);
+      filter.input.endDate = filter.end.format(minMaxFormat);
 
-      return filter.input.endDate;
+      return filter.end;
     }
 
     function setStart(start) {
-      filter.input.startDate = filter.start = moment(start);
+      filter.start = moment(start);
+      filter.input.startDate = filter.start.format(minMaxFormat);
 
-      return filter.input.startDate;
+      return filter.start;
     }
 
     /**
@@ -178,6 +194,7 @@
      * @return {this}
      */
     function setMaxTime(maxTime) {
+      intendedMaxTime = maxTime;
       if (!maxTime) {
         filter.max = undefined;
         return;
@@ -187,9 +204,6 @@
 
       if (max.isBefore(filter.end)) {
         max = moment(filter.end);
-        /*var diff = filter.end.diff(filter.start);
-        setEnd(max);
-        setStart(moment(max).subtract(diff));*/
       }
 
       filter.max = max.format(minMaxFormat);
@@ -264,8 +278,8 @@
 
       function matchesInput(range) {
         // This doesn't work because of min and max dates.
-        return range[0].isSame(filter.input.startDate) &&
-               range[1].isSame(filter.input.endDate);
+        return range[0].isSame(filter.start) &&
+               range[1].isSame(filter.end);
       }
     }
 

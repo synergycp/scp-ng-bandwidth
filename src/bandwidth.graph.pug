@@ -31,6 +31,10 @@ div(
       translate="bandwidth.no-data-period.TEXT"
       translate-value-period="{{ bandwidth.filter.range }}"
     )
+    a.btn.btn-primary(
+      ng-click="bandwidth.filter.jumpToLatest()"
+      translate="bandwidth.no-data-period.LATEST"
+    )
 
   div.bandwidth-plot-holder(
     ng-if="(bandwidth.chart.isActive && bandwidth.chart.hasFilteredData) || bandwidth.chart.firstLoad"
