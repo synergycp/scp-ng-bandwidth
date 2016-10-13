@@ -1,0 +1,17 @@
+.bandwidth-date-range-picker {
+  position: relative;
+  overflow: hidden;
+
+  .date-picker {
+    position: absolute;
+    visibility: hidden;
+    border: none;
+    width: 0;
+    left: 0;
+  }
+
+  .date-picker.opens-left {
+    right: 0;
+    left: auto;
+  }
+}

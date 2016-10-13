@@ -52,8 +52,8 @@
         }],
       }
     };
-    chart.width = 1800;
-    chart.height = 350;
+    chart.width = 1825;
+    chart.height = 325;
     chart.rawData = [];
     chart.rawLabels = [];
     chart.showStats = false;

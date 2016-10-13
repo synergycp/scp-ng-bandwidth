@@ -15,7 +15,18 @@
       },
       controller: 'BandwidthGraphCtrl as bandwidth',
       transclude: true,
-      templateUrl: 'app/bandwidth/bandwidth.graph.html'
+      templateUrl: templateUrl,
     })
     ;
+
+  /**
+   * @ngInject
+   */
+  function templateUrl(RouteHelpers) {
+    return RouteHelpers
+      .export('scp-ng-bandwidth')
+      .root('dist')
+      .path('bandwidth.graph.html')
+      ;
+  }
 })();

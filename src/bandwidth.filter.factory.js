@@ -3,12 +3,16 @@
 
   var OPTIONS = {
     refresh: function () {},
-    defaultRange: 'Last 6 Hours'
+    defaultRange: 'Last 6 Hours',
   };
+
+  var dateFormat = 'MM/DD/YYYY HH:mm';
+  var minMaxFormat = 'YYYY-MM-DD HH:mm';
 
   angular
     .module('scp.bandwidth')
-    .factory('BandwidthFilter', BandwidthFilterFactory);
+    .factory('BandwidthFilter', BandwidthFilterFactory)
+    ;
 
   /**
    * BandwidthFilter Factory
@@ -29,36 +33,40 @@
 
   function BandwidthFilter(options, moment, event, date, _) {
     var filter = this;
-    var thirty_m = moment.duration(30, 'minutes');
-    var now = date.round(
+    var intendedMaxTime;
+    var thirtyMinutes = moment.duration(30, 'minutes');
+    var nowRounded = date.round(
       moment(),
-      thirty_m,
+      thirtyMinutes,
       'ceil'
     );
-    var last_hour = date.round(
+    var lastHour = date.round(
       moment().subtract(1, 'hours'),
-      thirty_m,
+      thirtyMinutes,
       'floor'
     );
     var ranges = {
-      'Last Hour': [last_hour, now],
+      'Last Hour': [lastHour, nowRounded],
       'Last 6 Hours': [
-        moment(now).subtract(6, 'hours'),
-        now
+        moment(nowRounded).subtract(6, 'hours'),
+        nowRounded
       ],
       'Last Day': [
-        moment(now).subtract(1, 'day'),
-        now
+        moment(nowRounded).subtract(1, 'day'),
+        nowRounded
       ],
       'Last Week': [
-        moment(now).subtract(1, 'week'),
-        now
+        moment(nowRounded).subtract(1, 'week'),
+        nowRounded
       ],
       'Last Month': [
-        moment(now).subtract(1, 'month'),
-        now
+        moment(nowRounded).subtract(1, 'month'),
+        nowRounded
       ]
     };
+
+
+    filter.input = {};
 
     filter.setOptions = setOptions;
     filter.setRange = setRange;
@@ -66,14 +74,24 @@
     filter.setMaxTime = setMaxTime;
     filter.startTime = startTime;
     filter.endTime = endTime;
-    filter.defaultStartTime = defaultStartTime;
-    filter.defaultEndTime = defaultEndTime;
     filter.getRanges = getRanges;
     filter.getLabel = getLabel;
+    filter.setRangeByLabel = setRangeByLabel;
+    filter.jumpToLatest = jumpToLatest;
 
     activate();
 
     //////////
+
+    function jumpToLatest() {
+      var max = moment.unix(intendedMaxTime).subtract(1);
+      var diff = filter.end.diff(filter.start);
+      filter.setRange(
+        moment(max).subtract(diff),
+        max
+      );
+      filter.setMaxTime(intendedMaxTime);
+    }
 
     function setOptions(options) {
       _.assign(filter.opts, options);
@@ -81,36 +99,49 @@
       return filter;
     }
 
+    function setRangeByLabel(label) {
+      if (filter.range === label) {
+        return;
+      }
+
+      filter.range = label;
+      filter.setRange(
+        defaultStartTime(label),
+        defaultEndTime(label)
+      );
+    }
+
     function activate() {
       filter.options = options;
-      filter.range = filter.options.defaultRange;
       filter.isSetup = false;
-      filter.input = {
-        startDate: filter.start = filter.defaultStartTime(),
-        endDate: filter.end = filter.defaultEndTime(),
-      };
       filter.min = undefined;
-      filter.max = moment().add(5, 'minutes').format('YYYY-DD-MM');
+      filter.setMaxTime(
+        moment(nowRounded)
+          .add(5, 'minutes')
+          .unix()
+      );
 
       filter.opts = {
         ranges: ranges,
-        format: 'YYYY-DD-MM',
-        startDate: filter.start,
-        endDate: filter.end,
+        format: dateFormat,
         timePicker: true,
         timePicker24Hour: true,
         eventHandlers: {
-          'apply.daterangepicker': function () {
-            filter.setRange(
-              filter.input.startDate,
-              filter.input.endDate
-            );
-          },
+          'apply.daterangepicker': onDateChosen,
         },
       };
 
       event.bindTo(filter);
       filter.on('change', setRangeLabel);
+      filter.setRangeByLabel(filter.options.defaultRange);
+    }
+
+    function onDateChosen () {
+      console.log(filter.input.startDate);
+      filter.setRange(
+        filter.input.startDate,
+        filter.input.endDate
+      );
     }
 
     function setRangeLabel() {
@@ -127,9 +158,23 @@
     function setRange(start, end) {
       filter.fire(
         'change',
-        filter.input.startDate = filter.start = moment(start),
-        filter.input.endDate = filter.end = moment(end)
+        setStart(start),
+        setEnd(end)
       );
+    }
+
+    function setEnd(end) {
+      filter.end = moment(end);
+      filter.input.endDate = filter.end.format(minMaxFormat);
+
+      return filter.end;
+    }
+
+    function setStart(start) {
+      filter.start = moment(start);
+      filter.input.startDate = filter.start.format(minMaxFormat);
+
+      return filter.start;
     }
 
     /**
@@ -138,7 +183,7 @@
      * @return {this}
      */
     function setMinTime(minTime) {
-      filter.min = minTime ? moment.unix(minTime).format('YYYY-DD-MM') : undefined;
+      filter.min = minTime ? moment.unix(minTime).format(minMaxFormat) : undefined;
 
       return filter;
     }
@@ -149,7 +194,19 @@
      * @return {this}
      */
     function setMaxTime(maxTime) {
-      filter.max = maxTime ? moment.unix(maxTime).format('YYYY-DD-MM') : undefined;
+      intendedMaxTime = maxTime;
+      if (!maxTime) {
+        filter.max = undefined;
+        return;
+      }
+
+      var max = moment.unix(maxTime);
+
+      if (max.isBefore(filter.end)) {
+        max = moment(filter.end);
+      }
+
+      filter.max = max.format(minMaxFormat);
 
       return filter;
     }
@@ -175,19 +232,23 @@
     /**
      * Get the default selected start time.
      *
+     * @param {string} label
+     *
      * @return {moment|null}
      */
-    function defaultStartTime() {
-      return filter.getRanges()[filter.options.defaultRange][0];
+    function defaultStartTime(label) {
+      return filter.getRanges()[label][0];
     }
 
     /**
      * Get the default selected end time.
      *
+     * @param {string} label
+     *
      * @return {moment|null}
      */
-    function defaultEndTime() {
-      return filter.getRanges()[filter.options.defaultRange][1];
+    function defaultEndTime(label) {
+      return filter.getRanges()[label][1];
     }
 
     /**
@@ -217,8 +278,8 @@
 
       function matchesInput(range) {
         // This doesn't work because of min and max dates.
-        return range[0].isSame(filter.input.startDate) &&
-               range[1].isSame(filter.input.endDate);
+        return range[0].isSame(filter.start) &&
+               range[1].isSame(filter.end);
       }
     }
 
