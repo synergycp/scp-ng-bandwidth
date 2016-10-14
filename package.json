@@ -23,7 +23,7 @@
     "chart.js": "^2.2.2",
     "moment": "^2.14.1",
     "numeral": "^1.5.3",
-    "scp-ng-util": "git+ssh://git@github.com/cabloo/scp-ng-util.git#0.0.1"
+    "scp-ng-util": "git+ssh://git@github.com/cabloo/scp-ng-util.git"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
