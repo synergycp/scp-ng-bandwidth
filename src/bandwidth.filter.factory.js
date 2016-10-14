@@ -3,7 +3,6 @@
 
   var OPTIONS = {
     refresh: function () {},
-    defaultRange: 'Last 6 Hours',
   };
 
   var dateFormat = 'MM/DD/YYYY HH:mm';
@@ -133,11 +132,9 @@
 
       event.bindTo(filter);
       filter.on('change', setRangeLabel);
-      filter.setRangeByLabel(filter.options.defaultRange);
     }
 
     function onDateChosen () {
-      console.log(filter.input.startDate);
       filter.setRange(
         filter.input.startDate,
         filter.input.endDate
