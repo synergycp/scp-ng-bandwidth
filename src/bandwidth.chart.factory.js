@@ -3,20 +3,21 @@
 
   angular
     .module('scp.bandwidth')
-    .factory('BandwidthChart', BandwidthChartFactory);
+    .factory('BandwidthChart', BandwidthChartFactory)
+  ;
 
   /**
    * BandwidthChart Factory
    *
    * @ngInject
    */
-  function BandwidthChartFactory(numeral, bitsToSizeFilter) {
+  function BandwidthChartFactory(numeral, bitsToSizeFilter, _) {
     return function () {
-      return new BandwidthChart(numeral, bitsToSizeFilter);
+      return new BandwidthChart(numeral, bitsToSizeFilter, _);
     };
   }
 
-  function BandwidthChart(numeral, bitsToSize) {
+  function BandwidthChart(numeral, bitsToSize, _) {
     var chart = this;
     var divideBy = 1;
 
@@ -58,16 +59,30 @@
     chart.rawLabels = [];
     chart.showStats = false;
     chart.dataSetOptions = [];
-
-    chart.setData = setData;
     chart.stats = {
       set: setStats,
       cols: [],
     };
+
+    chart.noAnimation = noAnimation;
+    chart.setOptions = setOptions;
+    chart.setData = setData;
     chart.setLabels = setLabels;
     chart.addTopPctLine = addTopPctLine;
 
     //////////
+
+    function noAnimation() {
+      return chart.setOptions({
+        animation: false,
+      });
+    }
+
+    function setOptions(options) {
+      _.merge(chart.options,  options);
+
+      return chart;
+    }
 
     function setLabels(labels) {
       _.setContents(chart.rawLabels, labels);
