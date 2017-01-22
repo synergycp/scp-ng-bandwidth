@@ -84,8 +84,15 @@
       return chart;
     }
 
-    function setLabels(labels) {
-      _.setContents(chart.rawLabels, labels);
+    function setLabels(minTime, maxTime) {
+      if (!chart.rawData.length || !chart.rawData[0].length) {
+        return;
+      }
+
+      _.setContents(
+        chart.rawLabels,
+        _.range(minTime, maxTime, chart.rawData[0].length)
+      );
 
       resetData(chart.width);
     }
