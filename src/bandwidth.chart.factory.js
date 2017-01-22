@@ -89,9 +89,11 @@
         return;
       }
 
+      var interval = (maxTime-minTime)/chart.rawData[0].length;
+
       _.setContents(
         chart.rawLabels,
-        _.range(minTime, maxTime, chart.rawData[0].length)
+        _.range(minTime, maxTime, interval)
       );
 
       resetData(chart.width);
@@ -206,7 +208,6 @@
         chart.data[k] = chart.data[k] || [];
       }
 
-      //chart.labels = [];
       var a = -1;
       for (var i = 0; i < total; i++) {
         skip = divideBy && ((i + 1) % divideBy > 0);
@@ -226,6 +227,8 @@
           sum[k] = 0;
         }
       }
+
+      //chart.labels.length = a;
 
       /**
        * @param  {int} time
