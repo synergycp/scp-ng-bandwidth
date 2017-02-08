@@ -1,6 +1,6 @@
 {
   "name": "scp-ng-bandwidth",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Synergy Control Panel Angular bandwidth files",
   "main": "dist.min.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://github.com/cabloo/scp-ng-bandwidth.git"
+    "url": "git+ssh://github.com/synergycp/scp-ng-bandwidth.git"
   },
   "author": "Synergy Control Panel",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/cabloo/scp-ng-bandwidth/issues"
+    "url": "https://github.com/synergycp/scp-ng-bandwidth/issues"
   },
-  "homepage": "https://github.com/cabloo/scp-ng-bandwidth#readme",
+  "homepage": "https://github.com/synergycp/scp-ng-bandwidth#readme",
   "dependencies": {
     "angular-chart.js": "^1.0.2",
     "angular-daterangepicker": "^0.2.3-alpha1",
@@ -23,7 +23,7 @@
     "chart.js": "^2.2.2",
     "moment": "^2.14.1",
     "numeral": "^1.5.3",
-    "scp-ng-util": "git+ssh://git@github.com/cabloo/scp-ng-util.git"
+    "scp-ng-util": "git+ssh://git@github.com/synergycp/scp-ng-util.git"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
