@@ -20,7 +20,7 @@
     "angular-chart.js": "^1.0.2",
     "angular-daterangepicker": "^0.2.3-alpha1",
     "bootstrap-daterangepicker": "^2.1.24",
-    "chart.js": "^2.2.2",
+    "chart.js": "^2.5.0",
     "moment": "^2.14.1",
     "numeral": "^1.5.3",
     "scp-ng-util": "git+ssh://git@github.com/synergycp/scp-ng-util.git"
