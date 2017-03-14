@@ -204,8 +204,11 @@
       var sum = Array.apply(null, Array(sets)).map(Number.prototype.valueOf, 0);
       var skip, k;
 
+      chart.data.length = sets;
+      chart.labels.length = sets;
       for (k = 0; k < sets; k++) {
         chart.data[k] = chart.data[k] || [];
+        chart.data[k].length = 0;
       }
 
       var a = -1;
