@@ -15,11 +15,11 @@
     var vm = this;
 
     vm.$onInit = activate;
+    vm.userTimeZone = Intl ? Intl.DateTimeFormat().resolvedOptions().timeZone : null;
 
     //////////
 
     function activate() {
-      
     }
   }
 })();
