@@ -1,6 +1,6 @@
 {
   "name": "scp-ng-bandwidth",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "Synergy Control Panel Angular bandwidth files",
   "main": "dist.min.js",
   "scripts": {
