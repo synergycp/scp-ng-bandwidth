@@ -14,3 +14,16 @@ a.btn.btn-default.bandwidth-date-range-picker(
     min="picker.bandwidth.filter.min"
     max="picker.bandwidth.filter.max"
   )
+a.btn.btn-default.ml-lg(
+  ng-click="picker.changeRange('dec', picker.selectedRangeShift.value)"
+)
+  i.fa.fa-chevron-left 
+a.btn.btn-default.no-padding
+  select.btn-outline(
+    ng-options="shift as shift.label for shift in picker.rangeShifts track by shift.label"
+    ng-model="picker.selectedRangeShift"
+  )
+a.btn.btn-default(
+  ng-click="picker.changeRange('inc', picker.selectedRangeShift.value)"
+)
+  i.fa.fa-chevron-right
