@@ -226,6 +226,8 @@
             continue;
           }
 
+          // TODO: this does not average results properly and can produce jumping patterns.
+          // divideBy needs to be the number of rows skipped since the last + 1.
           chart.data[k][a] = Math.round(sum[k] / (divideBy || 1));
           sum[k] = 0;
         }
