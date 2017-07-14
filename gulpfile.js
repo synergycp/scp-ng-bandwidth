@@ -51,6 +51,7 @@ gulp.task('scripts', function () {
     .src(source.scripts)
     .pipe($.jsvalidate())
     .on('error', handleError)
+    .pipe($.sourcemaps.init({loadMaps: true}))
     .pipe($.concat(build.src.js))
     .pipe($.ngAnnotate())
     .on('error', handleError)
@@ -58,6 +59,7 @@ gulp.task('scripts', function () {
       preserveComments: 'some'
     }))
     .on('error', handleError)
+    .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest(build.dir))
     ;
 });
