@@ -34,35 +34,9 @@
     var filter = this;
     var intendedMaxTime;
     var thirtyMinutes = moment.duration(30, 'minutes');
-    var nowRounded = date.round(
-      moment(),
-      thirtyMinutes,
-      'ceil'
-    );
-    var lastHour = date.round(
-      moment().subtract(1, 'hours'),
-      thirtyMinutes,
-      'floor'
-    );
-    var ranges = {
-      'Last Hour': [lastHour, nowRounded],
-      'Last 6 Hours': [
-        moment(nowRounded).subtract(6, 'hours'),
-        nowRounded
-      ],
-      'Last Day': [
-        moment(nowRounded).subtract(1, 'day'),
-        nowRounded
-      ],
-      'Last Week': [
-        moment(nowRounded).subtract(1, 'week'),
-        nowRounded
-      ],
-      'Last Month': [
-        moment(nowRounded).subtract(1, 'month'),
-        nowRounded
-      ]
-    };
+    var nowRounded = getNowRounded();
+    var lastHour = getLastHour();
+    var ranges = updateRanges();
 
 
     filter.input = {};
@@ -77,6 +51,7 @@
     filter.getLabel = getLabel;
     filter.setRangeByLabel = setRangeByLabel;
     filter.jumpToLatest = jumpToLatest;
+    filter.updateRanges = updateRanges;
 
     activate();
 
@@ -255,6 +230,46 @@
      */
     function getRanges() {
       return ranges;
+    }
+
+    function updateRanges() {
+      lastHour = getLastHour();
+      nowRounded = getNowRounded();
+      return ranges = {
+        'Last Hour': [lastHour, nowRounded],
+        'Last 6 Hours': [
+          moment(nowRounded).subtract(6, 'hours'),
+          nowRounded
+        ],
+        'Last Day': [
+          moment(nowRounded).subtract(1, 'day'),
+          nowRounded
+        ],
+        'Last Week': [
+          moment(nowRounded).subtract(1, 'week'),
+          nowRounded
+        ],
+        'Last Month': [
+          moment(nowRounded).subtract(1, 'month'),
+          nowRounded
+        ]
+      }
+    }
+
+    function getLastHour() {
+      return date.round(
+        moment().subtract(1, 'hours'),
+        thirtyMinutes,
+        'floor'
+      )
+    }
+
+    function getNowRounded() {
+      return date.round(
+        moment(),
+        thirtyMinutes,
+        'ceil'
+      )
     }
 
     function getLabel() {

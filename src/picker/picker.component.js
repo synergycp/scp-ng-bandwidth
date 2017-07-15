@@ -65,6 +65,7 @@
     }
 
     function openFilter($event) {
+      picker.bandwidth.filter.updateRanges();
       var $elem = $picker();
 
       if ($event.target === $elem[0]) {
