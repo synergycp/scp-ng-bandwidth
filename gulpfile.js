@@ -51,12 +51,14 @@ gulp.task('scripts', function () {
     .src(source.scripts)
     .pipe($.jsvalidate())
     .on('error', handleError)
+    .pipe($.sourcemaps.init({loadMaps: true}))
     .pipe($.concat(build.src.js))
     .pipe($.ngAnnotate())
     .on('error', handleError)
     .pipe($.uglify({
       preserveComments: 'some'
     }))
+    .pipe($.sourcemaps.write('./'))
     .on('error', handleError)
     .pipe(gulp.dest(build.dir))
     ;
@@ -77,6 +79,7 @@ gulp.task('vendor', function () {
     .src(vendor.source)
     .pipe($.expectFile(vendor.source))
     .pipe(jsFilter)
+    .pipe($.sourcemaps.init({loadMaps: true}))
     .pipe($.concat(build.vendor.js))
     .pipe($.if(isProduction, $.uglify()))
     .pipe(gulp.dest(build.dir))
@@ -84,6 +87,7 @@ gulp.task('vendor', function () {
     .pipe(cssFilter)
     .pipe($.concat(build.vendor.css))
     .pipe($.cssnano(cssnanoOpts))
+    .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest(build.dir))
     .pipe(cssFilter.restore())
     ;
