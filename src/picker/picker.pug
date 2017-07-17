@@ -18,8 +18,8 @@ a.btn.btn-default.ml-lg(
   ng-click="picker.changeRange('dec', picker.selectedRangeShift.value)"
 )
   i.fa.fa-chevron-left 
-a.btn.btn-default.no-padding
-  select.btn-outline(
+a.btn.btn-default.btn-select
+  select(
     ng-options="shift as shift.label for shift in picker.rangeShifts track by shift.label"
     ng-model="picker.selectedRangeShift"
   )
