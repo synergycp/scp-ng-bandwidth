@@ -40,6 +40,7 @@ div(
     ng-if="(bandwidth.chart.isActive && bandwidth.chart.hasFilteredData) || bandwidth.chart.firstLoad"
   )
     canvas.chart.chart-line.bandwidth-plot(
+      ng-if="!bandwidth.chart.firstLoad"
       chart-data="bandwidth.chart.data"
       chart-labels="bandwidth.chart.labels"
       chart-series="bandwidth.chart.series"
@@ -48,4 +49,5 @@ div(
       width="{{bandwidth.chart.width}}"
       height="{{bandwidth.chart.height}}"
     )
+    div(ng-if="bandwidth.chart.firstLoad" style="height: 230px")
     span.text-center.center-block(ng-show="bandwidth.userTimeZone") All times are shown in {{bandwidth.userTimeZone}} time zone
