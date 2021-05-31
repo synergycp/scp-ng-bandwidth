@@ -22,8 +22,7 @@
     "bootstrap-daterangepicker": "^2.1.24",
     "chart.js": "^2.5.0",
     "moment": "^2.14.1",
-    "numeral": "^1.5.3",
-    "scp-ng-util": "git+ssh://git@github.com/synergycp/scp-ng-util.git"
+    "numeral": "^1.5.3"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
@@ -40,6 +39,7 @@
     "gulp-pug": "^3.0.4",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "scp-ng-util": "file:../scp-ng-util"
   }
 }
