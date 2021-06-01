@@ -39,6 +39,7 @@
     "gulp-pug": "^3.0.4",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-uglify": "^2.0.0",
-    "gulp-util": "^3.0.7"
+    "gulp-util": "^3.0.7",
+    "scp-ng-util": "file:../scp-ng-util"
   }
 }
