@@ -1,3 +1,4 @@
+// NOTE: intentionally not required in package.json because it causes collision issues with scp-angle
 var Util = require('scp-ng-util');
 
 module.exports = [
