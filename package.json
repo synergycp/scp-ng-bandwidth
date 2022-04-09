@@ -21,7 +21,7 @@
     "angular-daterangepicker": "^0.2.3-alpha1",
     "bootstrap-daterangepicker": "^2.1.24",
     "chart.js": "^2.5.0",
-    "moment": "^2.14.1",
+    "moment": "^2.29.2",
     "numeral": "^1.5.3"
   },
   "devDependencies": {
