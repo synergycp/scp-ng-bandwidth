@@ -1,4 +1,23 @@
-a.btn.btn-default.bandwidth-date-range-picker(
+a.btn.btn-default(
+  title="Jump back by the selected step"
+  ng-click="picker.changeRange('dec', picker.selectedRangeShift.value)"
+)
+  i.fa.fa-chevron-left
+a.btn.btn-default.btn-select.bandwidth-step-select(
+  title="How far the arrows move the graph"
+)
+  span.bandwidth-step-label Step:
+  select(
+    ng-options="shift as shift.label for shift in picker.rangeShifts track by shift.label"
+    ng-model="picker.selectedRangeShift"
+  )
+a.btn.btn-default(
+  title="Jump forward by the selected step"
+  ng-click="picker.changeRange('inc', picker.selectedRangeShift.value)"
+)
+  i.fa.fa-chevron-right
+a.btn.btn-default.ml-lg.bandwidth-date-range-picker(
+  title="Choose the date range shown"
   ng-if="picker.bandwidth.chart.isActive"
   ng-click="picker.openFilter($event)"
 )
@@ -14,16 +33,3 @@ a.btn.btn-default.bandwidth-date-range-picker(
     min="picker.bandwidth.filter.min"
     max="picker.bandwidth.filter.max"
   )
-a.btn.btn-default.ml-lg(
-  ng-click="picker.changeRange('dec', picker.selectedRangeShift.value)"
-)
-  i.fa.fa-chevron-left 
-a.btn.btn-default.btn-select
-  select(
-    ng-options="shift as shift.label for shift in picker.rangeShifts track by shift.label"
-    ng-model="picker.selectedRangeShift"
-  )
-a.btn.btn-default(
-  ng-click="picker.changeRange('inc', picker.selectedRangeShift.value)"
-)
-  i.fa.fa-chevron-right
